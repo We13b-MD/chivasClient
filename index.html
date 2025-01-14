@@ -360,7 +360,7 @@ sendDataToBackend()*/
 //updateAndSendData(dailyData);
 
 
-const updateAndSendData = async (dailyData) => {
+/*const updateAndSendData = async (dailyData) => {
   try {
     // Prepare updated data
     const updatedData = {
@@ -411,7 +411,77 @@ const updateAndSendData = async (dailyData) => {
 // Example usage
 
 
-updateAndSendData(dailyData);
+updateAndSendData(dailyData);*/
+
+
+
+  const updateAndSendData = async (dailyData) => {
+  try {
+    // Increment values before creating updated data
+    dailyData.imp++;
+    dailyData.clicks++;
+    dailyData.first++;
+    dailyData.sec++;
+    dailyData.videoStart++;
+    dailyData.completed++;
+    dailyData.safari++;
+    dailyData.chrome++;
+    dailyData.edge++;
+    dailyData.desktop++;
+    dailyData.mobile++;
+    dailyData.tablet++;
+    dailyData.linux++;
+    dailyData.ios++;
+    dailyData.android++;
+    dailyData.macOS++;
+    dailyData.windows++;
+
+    // Prepare updated data
+    const updatedData = {
+      date: new Date().toISOString().split('T')[0],
+      imp: dailyData.imp,
+      clicks: dailyData.clicks,
+      ctr: parseFloat((dailyData.clicks / dailyData.imp).toFixed(2)),
+      first: dailyData.first,
+      sec: dailyData.sec,
+      videoStart: dailyData.videoStart,
+      completed: dailyData.completed,
+      vtr: parseFloat((dailyData.completed / dailyData.videoStart).toFixed(2)),
+      safari: dailyData.safari,
+      chrome: dailyData.chrome,
+      edge: dailyData.edge,
+      desktop: dailyData.desktop,
+      mobile: dailyData.mobile,
+      tablet: dailyData.tablet,
+      linux: dailyData.linux,
+      ios: dailyData.ios,
+      android: dailyData.android,
+      macOS: dailyData.macOS,
+      windows: dailyData.windows,
+    };
+
+    console.log('Sending updated data:', updatedData);
+
+    // Send the updated data to the backend
+    const response = await fetch('https://chivas-server.onrender.com/api/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to send data: ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    console.log('Data successfully sent to the backend:', responseData);
+  } catch (error) {
+    console.error('Error sending data to the backend:', error);
+  }
+};
+updateAndSendData(dailyData)
 
 </script>
 </body>
